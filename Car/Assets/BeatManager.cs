@@ -23,6 +23,9 @@ public class BeatManager : MonoBehaviour
     double offset;
     double lastBeat;
 
+    int countL = 0;
+    int countR = 0;
+
     bool perfectTime = false;
     public bool movable = false;
     bool onStart = false;
@@ -48,7 +51,7 @@ public class BeatManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space) && !onStart)
         {
@@ -57,25 +60,6 @@ public class BeatManager : MonoBehaviour
 
         if (onStart)
         {
-            //deltaTime = GetComponent<AudioSource>().time - lastTime;
-            //print("deltaTime: " + deltaTime);
-            //timer += deltaTime;
-            //print("timer: " + timer);
-
-            //if (timer >= beatTerm)
-            //{
-            //    perfectTime = true;
-            //    movable = true;
-            //    clap.Play();
-            //    //StartCoroutine(beatAnim());
-            //    remainTime = beatTerm;
-            //    StartCoroutine(ResetFX());
-
-            //    offset = timer - beatTerm;
-
-            //    timer -= beatTerm;
-            //}
-
             if (AudioSettings.dspTime >= nextTime && bgmOn)
             {
                 perfectTime = true;
@@ -94,19 +78,17 @@ public class BeatManager : MonoBehaviour
                 nextTime = AudioSettings.dspTime + beatTerm;
             }
 
-            //lastTime = GetComponent<AudioSource>().time + offset;
-            //print("offset: " + offset);
-            //offset = 0;
+            var judgeTime =(AudioSettings.dspTime - lastBeat) * bpm;
 
-            var judgeTime = Math.Abs((AudioSettings.dspTime - lastBeat) * bpm);
-
-            if (judgeTime >= 10 && judgeTime <= 35)
+            //print("No Abs: " + judgeTime);
+            //if ((judgeTime >= 0 && judgeTime <= 25) || (judgeTime >= 50))
+            if(judgeTime >= 55 || judgeTime <= 20)      // center = 10
             {
                 print("On: " + judgeTime);
                 if (!movable)
                 {
-                    movable = true;
-                }
+                    movable = true; 
+                }   
             }
             else
             {
@@ -116,15 +98,18 @@ public class BeatManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.RightArrow) && movable)
             {
-                print(judgeTime);
+                movable = false;
+                //print(judgeTime);
                 player.Translate(Vector3.right);
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow) && movable)
             {
-                print(judgeTime);
+                movable = false;
+                //print(judgeTime);
                 player.Translate(Vector3.left);
             }
+
 
             //if (Input.GetKeyDown(KeyCode.Space) && (nextTime * 0.95) <= AudioSettings.dspTime && AudioSettings.dspTime < nextTime)
             //{
@@ -151,6 +136,7 @@ public class BeatManager : MonoBehaviour
             //}
         }
     }
+    
 
     IEnumerator Playing()
     {
