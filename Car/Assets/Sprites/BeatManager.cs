@@ -26,7 +26,6 @@ public class BeatManager : MonoBehaviour
     int countR = 0;
 
     bool perfectTime = false;
-    public bool movable = false;
     bool onStart = false;
     bool bgmOn = false;
 
