@@ -181,11 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c85450a74e350042992e93aff68cb6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 126
+  bpm: 127
   player: {fileID: 30870199}
   beatFX: {fileID: 1595803995}
   clap: {fileID: 351167096}
   timeOffset: 0.32499998807907104
+  movable: 0
 --- !u!4 &86874805
 Transform:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c80da98913d0fd045ab23d2b48eff5bf, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -340,7 +341,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c50f7262ecad0b64bb983067e144ccfd, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
