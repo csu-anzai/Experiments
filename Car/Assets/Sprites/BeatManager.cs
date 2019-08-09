@@ -21,6 +21,12 @@ public class BeatManager : MonoBehaviour
     double nextTime;
     double offset;
     double lastBeat;
+
+    int countL = 0;
+    int countR = 0;
+
+    bool perfectTime = false;
+    public bool movable = false;
     bool onStart = false;
     bool bgmOn = false;
 
@@ -41,13 +47,10 @@ public class BeatManager : MonoBehaviour
         
     }
 
-    private void Update()
+    void Update()
     {
         Movement();
-    }
 
-    void FixedUpdate()
-    {
         if(Input.GetKeyDown(KeyCode.Space) && !onStart)
         {
             onStart = true;
@@ -55,25 +58,6 @@ public class BeatManager : MonoBehaviour
 
         if (onStart)
         {
-            //deltaTime = GetComponent<AudioSource>().time - lastTime;
-            //print("deltaTime: " + deltaTime);
-            //timer += deltaTime;
-            //print("timer: " + timer);
-
-            //if (timer >= beatTerm)
-            //{
-            //    perfectTime = true;
-            //    movable = true;
-            //    clap.Play();
-            //    //StartCoroutine(beatAnim());
-            //    remainTime = beatTerm;
-            //    StartCoroutine(ResetFX());
-
-            //    offset = timer - beatTerm;
-
-            //    timer -= beatTerm;
-            //}
-
             if (AudioSettings.dspTime >= nextTime && bgmOn)
             {
                 print("Clap");
@@ -96,19 +80,17 @@ public class BeatManager : MonoBehaviour
                 nextTime = AudioSettings.dspTime + beatTerm;
             }
 
-            //lastTime = GetComponent<AudioSource>().time + offset;
-            //print("offset: " + offset);
-            //offset = 0;
+            var judgeTime =(AudioSettings.dspTime - lastBeat) * bpm;
 
-            var judgeTime = Math.Abs((AudioSettings.dspTime - lastBeat) * bpm);
-
-            if (judgeTime >= 10 && judgeTime <= 35)
+            //print("No Abs: " + judgeTime);
+            //if ((judgeTime >= 0 && judgeTime <= 25) || (judgeTime >= 50))
+            if(judgeTime >= 55 || judgeTime <= 20)      // center = 10
             {
                 print("On: " + judgeTime);
                 if (!movable)
                 {
-                    movable = true;
-                }
+                    movable = true; 
+                }   
             }
             else
             {
@@ -141,6 +123,7 @@ public class BeatManager : MonoBehaviour
             //}
         }
     }
+    
 
     private void Movement()
     {
