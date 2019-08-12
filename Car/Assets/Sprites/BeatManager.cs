@@ -58,6 +58,10 @@ public class BeatManager : MonoBehaviour
         {
             onStart = true;
         }
+        if (Input.touchCount >= 2 && !onStart)
+        {
+            onStart = true;
+        }
 
         if (onStart)
         {
@@ -167,6 +171,16 @@ public class BeatManager : MonoBehaviour
             isMovingCurrentBeat = true;
             
             pointer.Translate(Vector3.right * 2);
+            SpriteTiling();
+            print("No Abs: " + judgeTime);
+            return;
+        }
+
+        if (Input.touchCount >= 1 && movable)
+        {
+            isMovingCurrentBeat = true;
+
+            pointer.Translate(Vector3.up * 2);
             SpriteTiling();
             print("No Abs: " + judgeTime);
             return;
