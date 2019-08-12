@@ -214,7 +214,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 86874805}
-  - component: {fileID: 86874804}
   - component: {fileID: 86874806}
   - component: {fileID: 86874807}
   m_Layer: 0
@@ -224,28 +223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &86874804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86874803}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c85450a74e350042992e93aff68cb6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bpm: 120
-  player: {fileID: 30870199}
-  pointer: {fileID: 1650227747}
-  clap: {fileID: 351167096}
-  timeOffset: 0.550000011920929
-  movable: 0
-  targetTile: {fileID: 11400000, guid: 9ea5876e0e67f6a47b92898028c808cf, type: 2}
-  originTile: {fileID: 11400000, guid: 7dea88f157cc09545bdfb90398b7ba52, type: 2}
-  tileMap: {fileID: 1472177477}
-  water: {fileID: 2553619360419740705, guid: 273f822a22224784198f539c0750ca27, type: 3}
 --- !u!4 &86874805
 Transform:
   m_ObjectHideFlags: 0
@@ -273,7 +250,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c80da98913d0fd045ab23d2b48eff5bf, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

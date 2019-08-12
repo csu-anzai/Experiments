@@ -73,7 +73,7 @@ public class BeatManager1 : MonoBehaviour
 
     void Update()
     {
-        print(GetTimer());
+        //print(GetTimer());
 
         if ((Input.GetKeyDown(KeyCode.Space) || Input.touchCount >= 2) && !bgmOn)
         {
@@ -81,14 +81,9 @@ public class BeatManager1 : MonoBehaviour
             bgmOn = true;
         }
 
-        //if (Input.touchCount >= 2 && !onStart)
-        //{
-        //    onStart = true;
-        //}
-
-
         songTime += GetTimer() - previousFrameTime;
         previousFrameTime = GetTimer();
+
         if (mySong.time != lastReportedPlayheadPosition)
         {
             songTime = (songTime + mySong.time) / 2;
@@ -98,7 +93,35 @@ public class BeatManager1 : MonoBehaviour
         if (songTime >= term && bgmOn)
         {
             clap.Play();
+            playerManager.Following();
+            StartCoroutine(ResetFX());
+
             term += beatTerm;
+            lastBeat = songTime;            
+        }
+
+        judgeTime = (songTime - lastBeat) * 100;
+
+        if(judgeTime >= 0 && judgeTime <= 20)
+        {
+            if (!isMovingCurrentBeat)
+            {
+                Movement();
+            }
+            if (!movable)
+            {
+                movable = true;
+                isMovingCurrentBeat = false;
+            }
+        }
+        else
+        {
+            movable = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            print("judgeTime: " + judgeTime);
         }
 
         //if (onStart)
@@ -145,30 +168,6 @@ public class BeatManager1 : MonoBehaviour
         //        movable = false;
         //    }
 
-        //    //if (Input.GetKeyDown(KeyCode.Space) && (nextTime * 0.95) <= AudioSettings.dspTime && AudioSettings.dspTime < nextTime)
-        //    //{
-        //    //    player.Translate(Vector3.left);
-        //    //    movable = false;
-        //    //    print("Audio: " + AudioSettings.dspTime);
-        //    //    print("nextTime: " + nextTime * 0.95);
-        //    //}
-
-        //    //if (Input.GetKeyDown(KeyCode.Space) && (nextTime * 1.05) >= AudioSettings.dspTime && AudioSettings.dspTime > nextTime)
-        //    //{
-        //    //    player.Translate(Vector3.right);
-        //    //    movable = false;
-        //    //    print("Audio: " + AudioSettings.dspTime);
-        //    //    print("nextTime: " + nextTime * 1.05);
-        //    //}
-
-        //    //if (Input.GetKeyDown(KeyCode.Space) && AudioSettings.dspTime == nextTime)
-        //    //{
-        //    //    player.Translate(Vector3.up);
-        //    //    movable = false;
-        //    //    print("Audio: " + AudioSettings.dspTime);
-        //    //    print("nextTime: " + nextTime);
-        //    //}
-        //}
     }
     
 
@@ -180,7 +179,6 @@ public class BeatManager1 : MonoBehaviour
             
             pointer.Translate(Vector3.up * 2);
             SpriteTiling();
-            print("No Abs: " + judgeTime);
             return;
         }
 
@@ -190,7 +188,6 @@ public class BeatManager1 : MonoBehaviour
             
             pointer.Translate(Vector3.down * 2);
             SpriteTiling();
-            print("No Abs: " + judgeTime);
             return;
         }
 
@@ -200,7 +197,6 @@ public class BeatManager1 : MonoBehaviour
             
             pointer.Translate(Vector3.left * 2);
             SpriteTiling();
-            print("No Abs: " + judgeTime);
             return;
         }
 
@@ -210,17 +206,15 @@ public class BeatManager1 : MonoBehaviour
             
             pointer.Translate(Vector3.right * 2);
             SpriteTiling();
-            print("No Abs: " + judgeTime);
             return;
         }
 
-        if (Input.touchCount >= 1 && movable)
+        if (Input.touchCount == 1 && movable)
         {
             isMovingCurrentBeat = true;
 
             pointer.Translate(Vector3.up * 2);
             SpriteTiling();
-            print("No Abs: " + judgeTime);
             return;
         }
     }
@@ -238,14 +232,6 @@ public class BeatManager1 : MonoBehaviour
     {
         var w = Instantiate(water, pointer.position, Quaternion.identity);
         fool.Enqueue(w);
-    }
-
-
-
-    IEnumerator Playing()
-    {
-        yield return new WaitForSeconds((float)timeOffset);
-        mySong.Play();
     }
 
     IEnumerator ResetFX()
