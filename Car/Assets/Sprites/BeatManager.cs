@@ -63,6 +63,11 @@ public class BeatManager : MonoBehaviour
             onStart = true;
         }
 
+        if (Input.touchCount >= 2 && !onStart)
+        {
+            onStart = true;
+        }
+
         if (onStart)
         {
             if (AudioSettings.dspTime >= nextTime && bgmOn)
