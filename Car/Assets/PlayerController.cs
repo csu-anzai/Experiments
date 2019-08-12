@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
     bool overlap = false;
 
     Vector3 dir;
-    BeatManager beatManager;
+    BeatManager1 beatManager;
     GameObject w;
 
     private void Awake()
     {
-        beatManager = GameObject.FindObjectOfType<BeatManager>();
+        beatManager = GameObject.FindObjectOfType<BeatManager1>();
     }
 
     private void Start()
