@@ -22,15 +22,12 @@ public class BeatManager1 : MonoBehaviour
 
     double beatTerm;
     double nextTime;
-    double offset;
+    //double offset;
     double lastBeat;
     double judgeTime;
 
-    int countL = 0;
-    int countR = 0;
-
-    bool perfectTime = false;
-    bool onStart = false;
+    //bool perfectTime = false;
+    //bool onStart = false;
     bool bgmOn = false;
     bool isMovingCurrentBeat = false;
 
