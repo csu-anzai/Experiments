@@ -78,7 +78,7 @@ public class BeatManager : MonoBehaviour
                 currentCell = tileMap.WorldToCell(pointer.position);
                 //Tiling(currentCell);
                 playerManager.targetCells.Enqueue(currentCell);
-                playerManager.Following();
+                //playerManager.Following();
                 //playerManager.MakeDirection();                
                 StartCoroutine(ResetFX());
             }

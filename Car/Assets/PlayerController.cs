@@ -6,15 +6,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Queue<Vector3Int> targetCells;
+    public List<Transform> line;
     public Transform pointer;
     public Vector3Int beforePos;
+    public Vector3 previousPos;
 
     bool overlap = false;
 
     Vector3 dir;
+    Vector3 w;
     BeatManager1 beatManager;
-    GameObject w;
-
+    
     private void Awake()
     {
         beatManager = GameObject.FindObjectOfType<BeatManager1>();
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        line = new List<Transform>();
+        line.Add(transform);
         targetCells = new Queue<Vector3Int>();
         dir = transform.position;
     }
@@ -29,24 +33,55 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckPointerPosition();
+        if(!beatManager.isMovingCurrentBeat)
+        {
+            Movement();
+        }
     }
 
-    public void Following()
+    private void Movement()
     {
-        beforePos = Vector3Int.FloorToInt(transform.position);
-        transform.position = dir;
-        if (w != null)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && beatManager.movable)
         {
-            Destroy(w);
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(Vector3.up * 2);
+            return;
         }
 
-        if (beatManager.fool.Count != 0)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && beatManager.movable)
         {
-            //Destroy(beatManager.fool.Dequeue());
-            w = beatManager.fool.Dequeue();
-            dir = w.transform.position;
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(Vector3.down * 2);
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(Vector3.left * 2);
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(Vector3.right * 2);
+            return;
+        }
+
+        if (Input.touchCount == 1 && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(Vector3.up * 2);
+            return;
         }
     }
+
 
     public void MakeDirection()
     {
