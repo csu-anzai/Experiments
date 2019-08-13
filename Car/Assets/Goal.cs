@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    BeatManager system;
+    BeatManager1 system;
 
     private void Awake()
     {
-        system = FindObjectOfType<BeatManager>();
+        system = FindObjectOfType<BeatManager1>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
