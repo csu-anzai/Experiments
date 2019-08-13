@@ -72,7 +72,7 @@ public class BeatManager1 : MonoBehaviour
         if (songTime >= term && bgmOn)
         {
             clap.Play();
-            foreach(var a in anims)
+            foreach (var a in anims)
             {
                 a.SetTrigger("Dancing");
             }
