@@ -4,7 +4,6 @@ using UnityEngine;
 public class MonsterController : MonoBehaviour
 {
     public Vector3 previousPos;
-    public Animator p_anim;
 
     int front;
     int me;
@@ -36,11 +35,6 @@ public class MonsterController : MonoBehaviour
                 transform.position = frontMonsterCtrl.previousPos;
             }
         }
-
-        if(p_anim.GetBool("Dancing"))
-        {
-            anim.SetTrigger("Dancing");
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -61,6 +55,7 @@ public class MonsterController : MonoBehaviour
             }
 
             line.Add(transform);
+            Camera.main.orthographicSize += 0.25f;
             isConneted = true;
 
         }
