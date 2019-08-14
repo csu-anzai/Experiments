@@ -5,16 +5,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using DG.Tweening;
 
-public class BeatManager1 : MonoBehaviour
+public class BeatManager : MonoBehaviour
 {
     public int bpm;
     public Transform player;
     public Transform pointer;
     public AudioSource clap;
-    public List<Animator> anims;
     [Range(0f, 100f)]
     public double timeOffset;
     public bool movable = false;
+    public int queueSign;
     public bool isMovingCurrentBeat = false;
     public Queue<Vector3> fool;
 
@@ -45,6 +45,7 @@ public class BeatManager1 : MonoBehaviour
         previousFrameTime = GetTimer();
         lastReportedPlayheadPosition = 0;
         term = mySong.time + beatTerm + timeOffset;
+        queueSign = 0;
     }
 
     private double GetTimer()
@@ -72,10 +73,8 @@ public class BeatManager1 : MonoBehaviour
         if (songTime >= term && bgmOn)
         {
             clap.Play();
-            foreach (var a in anims)
-            {
-                a.SetTrigger("Dancing");
-            }
+            queueSign++;
+
             StartCoroutine(ResetFX());
 
             term += beatTerm;
@@ -106,7 +105,16 @@ public class BeatManager1 : MonoBehaviour
             print("judgeTime: " + judgeTime);
         }
     }
-    
+
+    IEnumerator ResetFX()
+    {
+        yield return null;
+
+        pointer.GetChild(0).localScale *= 40f; // BeatFX
+        pointer.GetChild(0).DOScale(Vector3.one, (float)beatTerm - 0.1f);
+        pointer.GetChild(1).localScale *= 1.5f; // CrossHair
+        pointer.GetChild(1).DOScale(Vector3.one, (float)beatTerm - 0.1f);
+    }
 
     //private void Movement()
     //{
@@ -145,20 +153,4 @@ public class BeatManager1 : MonoBehaviour
     //        return;
     //    }
     //}
-
-    private void SpriteTiling()
-    {
-        Vector3 w = pointer.position;
-        fool.Enqueue(w);
-    }
-
-    IEnumerator ResetFX()
-    {
-        yield return null;
-
-        pointer.GetChild(0).localScale *= 40f; // BeatFX
-        pointer.GetChild(0).DOScale(Vector3.one, (float)beatTerm - 0.1f);
-        pointer.GetChild(1).localScale *= 1.5f; // CrossHair
-        pointer.GetChild(1).DOScale(Vector3.one, (float)beatTerm - 0.1f);
-    }
 }
