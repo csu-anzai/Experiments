@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -73,11 +74,34 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (Input.touchCount == 1 && beatManager.movable)
+        //if (Input.touchCount == 1 && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.up * 1);
+        //    return;
+        //}
+
+        // Mobile ------------------------------------------------------
+
+        float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+        float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
+
+        if(dirx != 0 && beatManager.movable)
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.up * 1);
+            transform.Translate(new Vector3(dirx, 0f, 0f));
+            CrossPlatformInputManager.SetAxisZero("Horizontal");
+            return;
+        }
+
+        if (diry != 0 && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(new Vector3(0f, diry, 0f));
+            CrossPlatformInputManager.SetAxisZero("Vertical");
             return;
         }
     }
