@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.up * 2);
+            transform.Translate(Vector3.up * 1);
             return;
         }
 
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.down * 2);
+            transform.Translate(Vector3.down * 1);
             return;
         }
 
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.left * 2);
+            transform.Translate(Vector3.left * 1);
             return;
         }
 
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.right * 2);
+            transform.Translate(Vector3.right * 1);
             return;
         }
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(Vector3.up * 2);
+            transform.Translate(Vector3.up * 1);
             return;
         }
     }
