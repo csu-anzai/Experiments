@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+
+public class PlayerController : Character
+{
+    public List<Transform> line;
+    public LayerMask mask;
+
+    RaycastHit2D hit;
+    Ray2D upRay;
+    Ray2D downRay;
+    Ray2D leftRay;
+    Ray2D rightRay;
+
+    Vector2 dir;
+    float horizontal;
+    float vertical;
+
+    private void Start()
+    {
+        line = new List<Transform>();
+        line.Add(transform);
+    }
+
+    private void Update()
+    {
+        if(queueSign != CheckQueueSign())
+        {
+            anim.SetTrigger("Dancing");
+            queueSign++;
+        }
+
+        if(!beatManager.isMovingCurrentBeat)
+        {
+            Movement();
+        }
+    }
+
+    private void Movement()
+    {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        dir = new Vector2(horizontal, vertical);
+
+        if (beatManager.movable && dir != Vector2.zero && dir.magnitude == 1)
+        {
+            hit = Physics2D.Raycast(transform.position, dir, 1f, mask);
+            if (hit)
+            {
+                anim.SetTrigger("Fail");
+                return;
+            }
+
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(dir);
+            return;
+        }
+
+        //if (Input.GetKeyDown(KeyCode.UpArrow) && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.up * 1);
+        //    return;
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.DownArrow) && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.down * 1);
+        //    return;
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.LeftArrow) && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.left * 1);
+        //    return;
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.RightArrow) && beatManager.movable)
+        //{
+            
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.right * 1);
+        //    return;
+        //}
+
+        //if (Input.touchCount == 1 && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(Vector3.up * 1);
+        //    return;
+        //}
+
+        // Mobile ------------------------------------------------------
+
+        float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+        float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
+
+        if(dirx != 0 && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(new Vector3(dirx, 0f, 0f));
+            CrossPlatformInputManager.SetAxisZero("Horizontal");
+            return;
+        }
+
+        if (diry != 0 && beatManager.movable)
+        {
+            previousPos = transform.position;
+            beatManager.isMovingCurrentBeat = true;
+            transform.Translate(new Vector3(0f, diry, 0f));
+            CrossPlatformInputManager.SetAxisZero("Vertical");
+            return;
+        }
+    }
+}

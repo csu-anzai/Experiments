@@ -1,11 +1,12 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using DG.Tweening;
 
-public class BeatManager : MonoBehaviour
+public class BeatManagerBackup : MonoBehaviour
 {
     public int bpm;
     public Transform player;
@@ -227,3 +228,4 @@ public class BeatManager : MonoBehaviour
         pointer.GetChild(1).DOScale(Vector3.one, (float)beatTerm - 0.1f);
     }
 }
+*/
