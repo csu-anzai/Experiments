@@ -16,6 +16,7 @@ public class PlayerController : Character
     Ray2D rightRay;
 
     Vector2 dir;
+    Vector2 mDir;
     float horizontal;
     float vertical;
 
@@ -105,23 +106,45 @@ public class PlayerController : Character
 
         float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
+        
+        mDir = new Vector2(dirx, diry);        
 
-        if(dirx != 0 && beatManager.movable)
+        if (beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
         {
+            print("pass");
+            hit = Physics2D.Raycast(transform.position, mDir, 1f, mask);
+            if (hit)
+            {
+                anim.SetTrigger("Fail");
+                return;
+            }
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
-            transform.Translate(new Vector3(dirx, 0f, 0f));
+            transform.Translate(mDir);
             CrossPlatformInputManager.SetAxisZero("Horizontal");
-            return;
-        }
-
-        if (diry != 0 && beatManager.movable)
-        {
-            previousPos = transform.position;
-            beatManager.isMovingCurrentBeat = true;
-            transform.Translate(new Vector3(0f, diry, 0f));
             CrossPlatformInputManager.SetAxisZero("Vertical");
             return;
+
         }
+
+        // Mobile move Legacy------------------------------------
+
+        //if (dirx != 0 && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(new Vector3(dirx, 0f, 0f));
+        //    CrossPlatformInputManager.SetAxisZero("Horizontal");
+        //    return;
+        //}
+
+        //if (diry != 0 && beatManager.movable)
+        //{
+        //    previousPos = transform.position;
+        //    beatManager.isMovingCurrentBeat = true;
+        //    transform.Translate(new Vector3(0f, diry, 0f));
+        //    CrossPlatformInputManager.SetAxisZero("Vertical");
+        //    return;
+        //}
     }
 }
