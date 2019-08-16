@@ -6,12 +6,19 @@ public class MonsterController : Character
 {
     int front;
     int me;
+    public int damage;
 
     MonsterController frontMonsterCtrl;
     PlayerController playerCtrl;
 
     List<Transform> line;
     bool isConneted = false;
+    Vector2 originPos;
+
+    private void Start()
+    {
+        originPos = transform.position;
+    }
 
     private void Update()
     {
@@ -57,6 +64,18 @@ public class MonsterController : Character
             isConneted = true;
 
         }
+
+        if (collision.tag == "Hero")
+        {
+            line[0].GetComponent<PlayerController>().Damaged(damage);
+        }
+    }
+
+    internal void ResetPosition()
+    {
+        line.Remove(transform);
+        transform.position = originPos;
+        isConneted = false;
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)

@@ -19,6 +19,7 @@ public class PlayerController : Character
     Vector2 mDir;
     float horizontal;
     float vertical;
+    int damage;
 
     private void Start()
     {
@@ -37,6 +38,21 @@ public class PlayerController : Character
         if(!beatManager.isMovingCurrentBeat)
         {
             Movement();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Damaged(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Damaged(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Damaged(3);
         }
     }
 
@@ -146,5 +162,28 @@ public class PlayerController : Character
         //    CrossPlatformInputManager.SetAxisZero("Vertical");
         //    return;
         //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Hero")
+        {
+            Damaged(damage);
+        }
+    }
+
+    internal void Damaged(int damage)
+    {
+        if (damage != 0 && line.Count == 1)
+        {
+            print("Game Over");
+            beatManager.gameObject.SetActive(false);
+            return;
+        }
+
+        for (int i = 0; i < damage; i++)
+        {
+            line[line.Count - 1].GetComponent<MonsterController>().ResetPosition();
+        }
     }
 }
