@@ -174,7 +174,7 @@ public class PlayerController : Character
 
     internal void Damaged(int damage)
     {
-        if (damage != 0 && line.Count == 1)
+        if (damage != 0 && line.Count - damage <= 0)
         {
             print("Game Over");
             beatManager.gameObject.SetActive(false);
