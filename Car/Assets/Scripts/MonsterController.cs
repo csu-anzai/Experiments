@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterController : MonoBehaviour
+public class MonsterController : Character
 {
-    public Vector3 previousPos;
-
     int front;
     int me;
 
@@ -13,16 +12,16 @@ public class MonsterController : MonoBehaviour
 
     List<Transform> line;
     bool isConneted = false;
-    Animator anim;
-
-    private void Start()
-    {
-        anim = GetComponentInChildren<Animator>();
-    }
 
     private void Update()
     {
-        if(line != null && front == 0 && isConneted)
+        if (queueSign != CheckQueueSign())
+        {
+            anim.SetTrigger("Dancing");
+            queueSign++;
+        }
+
+        if (line != null && front == 0 && isConneted)
         {
             previousPos = transform.position;
             transform.position = playerCtrl.previousPos;
@@ -45,7 +44,7 @@ public class MonsterController : MonoBehaviour
             me = line.Count;
             front = me - 1;
 
-            if(front == 0)
+            if (front == 0)
             {
                 playerCtrl = line[front].GetComponent<PlayerController>();
             }
@@ -60,4 +59,27 @@ public class MonsterController : MonoBehaviour
 
         }
     }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.transform.tag == "Player" && !isConneted)
+    //    {
+    //        line = collision.transform.GetComponent<PlayerController>().line;
+    //        me = line.Count;
+    //        front = me - 1;
+
+    //        if (front == 0)
+    //        {
+    //            playerCtrl = line[front].GetComponent<PlayerController>();
+    //        }
+    //        else
+    //        {
+    //            frontMonsterCtrl = line[front].GetComponent<MonsterController>();
+    //        }
+
+    //        line.Add(transform);
+    //        isConneted = true;
+
+    //    }
+    //}
 }
