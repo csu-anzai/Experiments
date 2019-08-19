@@ -5,6 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public BeatManager beatManager;
+    public Transform parentPlayer;
     public Vector3 previousPos;
 
     protected Animator anim;
