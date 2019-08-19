@@ -23,6 +23,7 @@ public class PlayerController : Character
 
     private void Start()
     {
+        parentPlayer = transform;
         line = new List<Transform>();
         line.Add(transform);
     }

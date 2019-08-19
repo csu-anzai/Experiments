@@ -61,6 +61,8 @@ public class MonsterController : Character
             }
 
             line.Add(transform);
+            parentPlayer = collision.transform;
+            gameObject.layer = LayerMask.NameToLayer("Monsters");
             isConneted = true;
 
         }
@@ -75,6 +77,7 @@ public class MonsterController : Character
     {
         line.Remove(transform);
         transform.position = originPos;
+        gameObject.layer = LayerMask.NameToLayer("Default");
         isConneted = false;
     }
 
