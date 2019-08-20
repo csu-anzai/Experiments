@@ -28,7 +28,7 @@ public class HeroController : Character
             queueSign++;
         }
 
-        if (moveCount == 2)
+        if (moveCount == 3)
         {
             hit = Physics2D.CircleCast(transform.position, 0.7f, Vector2.zero, 0f, mask);
             if (hit)
