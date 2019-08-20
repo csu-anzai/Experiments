@@ -3873,7 +3873,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
@@ -3890,19 +3889,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58087153f5e202142a26a8800ac1593d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 30870199}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -4510,7 +4496,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 17.87}
+  m_Size: {x: 20, y: 18}
   m_EdgeRadius: 0
 --- !u!66 &681997260
 CompositeCollider2D:
@@ -4533,19 +4519,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 681997259}
     m_ColliderPaths:
     - - X: 99999971
-        Y: -89350008
+        Y: -90000000
       - X: 99999971
-        Y: 89350008
+        Y: 90000000
       - X: -100000000
-        Y: 89349979
+        Y: 89999971
       - X: -99999971
-        Y: -89350008
+        Y: -90000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 9.999994, y: -8.935001}
-      - {x: 9.999994, y: 8.935001}
-      - {x: -10, y: 8.934996}
-      - {x: -9.999994, y: -8.935001}
+    - - {x: 9.999994, y: -9}
+      - {x: 9.999994, y: 9}
+      - {x: -10, y: 8.999994}
+      - {x: -9.999994, y: -9}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
 --- !u!50 &681997261
@@ -4581,7 +4567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &686300286
 GameObject:
@@ -9973,6 +9959,7 @@ GameObject:
   - component: {fileID: 2112288210}
   - component: {fileID: 2112288209}
   - component: {fileID: 2112288211}
+  - component: {fileID: 2112288212}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -10030,7 +10017,7 @@ Transform:
   m_Children:
   - {fileID: 1937605809}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2112288211
 MonoBehaviour:
@@ -10049,3 +10036,16 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 681997260}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &2112288212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112288208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58087153f5e202142a26a8800ac1593d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 30870199}

@@ -17,7 +17,7 @@ public class MonsterController : Character
 
     private void Start()
     {
-        originPos = transform.position;
+        originPos = transform.position;        
     }
 
     private void Update()
