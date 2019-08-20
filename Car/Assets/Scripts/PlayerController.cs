@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using Cinemachine;
 
 public class PlayerController : Character
 {
@@ -30,7 +31,6 @@ public class PlayerController : Character
 
     private void Update()
     {
-        CameraCheck();
 
         if(queueSign != CheckQueueSign())
         {
@@ -57,13 +57,6 @@ public class PlayerController : Character
         {
             Damaged(3);
         }
-    }
-
-    private void CameraCheck()
-    {
-        var cam = Camera.main;
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, line.Count + 4, 0.5f);
-        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 5, 10);
     }
 
     private void Movement()
