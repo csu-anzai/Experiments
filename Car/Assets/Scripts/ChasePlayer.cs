@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class ChasePlayer : MonoBehaviour
+public class ChasePlayer : EnemyController
 {
     public Transform player;
 
