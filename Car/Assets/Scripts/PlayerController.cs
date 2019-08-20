@@ -175,18 +175,22 @@ public class PlayerController : Character
         }
     }
 
-    internal void Damaged(int damage)
+    internal List<Transform> Damaged(int damage)
     {
+        List<Transform> mobs = new List<Transform>();
+        
         if (damage != 0 && line.Count - damage <= 0)
         {
             print("Game Over");
             beatManager.gameObject.SetActive(false);
-            return;
+            return mobs;
         }
 
         for (int i = 0; i < damage; i++)
         {
+            mobs.Add(line[line.Count - 1]);
             line[line.Count - 1].GetComponent<MonsterController>().ResetPosition();
         }
+        return mobs;
     }
 }

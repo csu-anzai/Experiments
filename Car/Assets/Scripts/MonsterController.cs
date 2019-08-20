@@ -77,7 +77,7 @@ public class MonsterController : Character
     {
         line.Remove(transform);
         transform.position = originPos;
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         isConneted = false;
     }
 
