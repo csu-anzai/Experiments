@@ -7,8 +7,8 @@ public class EnemyController : Character
     public float attackRange;
     public float detectRange;
 
-    public bool tracing = false;
-        
+    public bool tracking = false;
+    public bool onPatrol = false;
 
     protected Transform target;
     
@@ -24,7 +24,7 @@ public class EnemyController : Character
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Monsters"))
             {
                 print("hit");
-                tracing = true;
+                tracking = true;
                 target = m;
                 break;
             }
@@ -34,7 +34,9 @@ public class EnemyController : Character
                 //continue;
             }
             target = null;
-            tracing = false;
+            tracking = false;
+            anim.SetBool("OnTracking", false);
+            onPatrol = true;
         }
 
         //hit = Physics2D.Raycast(transform.position, (target.position - transform.position).normalized);
