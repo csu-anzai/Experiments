@@ -1,23 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class MonsterController : Character
 {
+    public int damage;
+    public Vector2 originPos;
+
     int front;
     int me;
-    public int damage;
 
     MonsterController frontMonsterCtrl;
     PlayerController playerCtrl;
+    AIPath ai;
 
     List<Transform> line;
     bool isConneted = false;
-    Vector2 originPos;
+    bool untouchable = false;
 
     private void Start()
     {
         originPos = transform.position;
+        ai = GetComponent<AIPath>();
     }
 
     private void Update()
@@ -28,12 +34,12 @@ public class MonsterController : Character
             queueSign++;
         }
 
-        if (line != null && front == 0 && isConneted)
+        if (line != null && front == 0 && isConneted && !untouchable)
         {
             previousPos = transform.position;
             transform.position = playerCtrl.previousPos;
         }
-        else if(line != null && front != -1 && isConneted)
+        else if(line != null && front != -1 && isConneted && !untouchable)
         {
             if(frontMonsterCtrl.previousPos != line[front].position)
             {
@@ -73,12 +79,19 @@ public class MonsterController : Character
         }
     }
 
-    internal void ResetPosition()
+    internal IEnumerator ResetPosition()
     {
-        line.Remove(transform);
-        transform.position = originPos;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        untouchable = true;
         isConneted = false;
+        line.Remove(transform);
+        ai.canMove = true;
+        yield return new WaitForSeconds(3f);
+        untouchable = false;
+        transform.position = originPos;
+        ai.canMove = false;
+        
+        
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
