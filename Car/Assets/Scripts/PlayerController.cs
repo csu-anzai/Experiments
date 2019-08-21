@@ -189,7 +189,7 @@ public class PlayerController : Character
         for (int i = 0; i < damage; i++)
         {
             mobs.Add(line[line.Count - 1]);
-            line[line.Count - 1].GetComponent<MonsterController>().ResetPosition();
+            StartCoroutine(line[line.Count - 1].GetComponent<MonsterController>().ResetPosition());
         }
         return mobs;
     }
