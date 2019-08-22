@@ -17,8 +17,8 @@ public class HeroController : EnemyController
     AIDestinationSetter aiTarget;
     AIPath ai;
     CinemachineImpulseSource impulseManager;
-
-    RaycastHit2D hit;
+    
+    public RaycastHit2D hit;
     Vector2 enemyDir;
     Vector2 targetVector;
     int moveCount = 0;
@@ -34,6 +34,7 @@ public class HeroController : EnemyController
 
     void Update()
     {
+        hit = Physics2D.CircleCast(transform.position, 0.7f, Vector2.zero, 0f, mask);
         if (foundMonsters.Count == 0)
         {
             tracking = false;
@@ -52,10 +53,10 @@ public class HeroController : EnemyController
         }
 
         if (moveCount == 2)
-        {
+        {            
             hit = Physics2D.CircleCast(transform.position, 0.7f, Vector2.zero, 0f, mask);
             if (hit)
-            {
+            {                
                 detectEnemy = true;
                 enemyDir = hit.transform.position;
             }
@@ -70,6 +71,7 @@ public class HeroController : EnemyController
                 moveCount = 0;
                 Patrolling();
             }
+
             else
             {
                 moveCount = 0;
@@ -119,13 +121,13 @@ public class HeroController : EnemyController
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawSphere(transform.position, 0.7f);
-    //    Gizmos.color = Color.magenta;
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, 0.7f);
+        Gizmos.color = Color.magenta;
 
-    //    Gizmos.DrawRay(transform.position, targetVector - (Vector2)transform.position);
-    //}
+        Gizmos.DrawRay(transform.position, targetVector - (Vector2)transform.position);
+    }
 
     private void Attack(Vector2 enemyDir)
     {
@@ -134,23 +136,24 @@ public class HeroController : EnemyController
         anim.SetFloat("Y", dir.y);
         anim.SetTrigger("Attack");
 
-        impulseManager.GenerateImpulse();
-        hitFX.transform.position = enemyDir;
-        hitFX.Play();
+        //impulseManager.GenerateImpulse();
+        //hitFX.transform.position = enemyDir;
+        //hitFX.Play();
 
-        print("Attack: " + enemyDir);
-        var mobs = hit.transform.GetComponent<Character>().parentPlayer.GetComponent<PlayerController>().Damaged(damage);
+        //var mobs = hit.transform.GetComponent<Character>().parentPlayer.GetComponent<PlayerController>().Damaged(damage);
+
         detectEnemy = false;
 
-        if (mobs == null)
-            return;
-        foreach (var m in mobs)
-        {
-            if(foundMonsters.Contains(m))
-            {
-                foundMonsters.Remove(m);
-            }
-        }
+        //if (mobs == null)
+        //    return;
+        //foreach (var m in mobs)
+        //{
+        //    if (foundMonsters.Contains(m))
+        //    {
+        //        foundMonsters.Remove(m);
+        //    }
+        //}
+
     }
 
     private void Tracking()
@@ -160,7 +163,7 @@ public class HeroController : EnemyController
         anim.SetFloat("Y", dir.y);
         if (tracking)
         {
-            transform.localPosition = ai.steeringTarget;
+            transform.position = (Vector2)ai.steeringTarget;
         }
     }
 
@@ -171,8 +174,8 @@ public class HeroController : EnemyController
             dest = 0;
             aiTarget.target = patrolPoints[dest];
         }
-        
-        if (transform.localPosition == patrolPoints[dest].position)
+
+        if (Vector2.Distance(transform.position, patrolPoints[dest].position) <= 0.2)
         {
             if (dest + 1 != patrolPoints.Count)
             {
@@ -189,7 +192,7 @@ public class HeroController : EnemyController
         Vector2 dir = ai.steeringTarget - transform.position;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
-        transform.localPosition = ai.steeringTarget;
+        transform.position = (Vector2)ai.steeringTarget;
     }
 
     internal void ActivateEmote(int id) => StartCoroutine(Emote(id));
@@ -203,5 +206,26 @@ public class HeroController : EnemyController
         emoteList[id].SetActive(true);
         yield return new WaitForSeconds(1f);
         emoteList[id].SetActive(false);
+    }
+
+    public void Attack()
+    {
+        if (hit && hit.transform.gameObject.layer == LayerMask.NameToLayer("Monsters"))
+        {
+            impulseManager.GenerateImpulse();
+            hitFX.transform.position = hit.transform.position;
+            hitFX.Play();
+
+            var mobs = hit.transform.GetComponent<Character>().parentPlayer.GetComponent<PlayerController>().Damaged(damage);
+            if (mobs == null)
+                return;
+            foreach (var m in mobs)
+            {
+                if (foundMonsters.Contains(m))
+                {
+                    foundMonsters.Remove(m);
+                }
+            }
+        }
     }
 }
