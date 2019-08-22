@@ -15,22 +15,21 @@ public class EnemyController : Character
 
     protected void Finding(List<Transform> foundMonsters)
     {
-        RaycastHit2D hit;
-        print("finding");
+        RaycastHit2D hit;       
 
         foreach(var m in foundMonsters)
-        {
+        {            
             hit = Physics2D.Raycast(transform.position, (m.position - transform.position).normalized);
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Monsters"))
+            if (hit && hit.transform.gameObject.layer == LayerMask.NameToLayer("Monsters"))
             {
-                print("hit");
                 tracking = true;
+                anim.SetBool("OnTracking", true);
+                onPatrol = false;
                 target = m;
                 break;
             }
-            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
-            {
-                print(hit.transform.name);
+            else if (hit && hit.transform.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
+            {                
                 //continue;
             }
             target = null;
