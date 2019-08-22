@@ -59,7 +59,7 @@ public class PlayerController : Character
         }
     }
 
-    private void Movement()
+    public void Movement()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -167,13 +167,13 @@ public class PlayerController : Character
         //}
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Hero")
-        {
-            Damaged(damage);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "Hero")
+    //    {
+    //        Damaged(damage);
+    //    }
+    //}
 
     internal List<Transform> Damaged(int damage)
     {

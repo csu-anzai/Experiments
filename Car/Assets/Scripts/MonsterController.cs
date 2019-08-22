@@ -51,7 +51,7 @@ public class MonsterController : Character
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !isConneted)
+        if (collision.tag == "Player" && !isConneted && !untouchable)
         {
             line = collision.GetComponent<PlayerController>().line;
             me = line.Count;
@@ -73,10 +73,10 @@ public class MonsterController : Character
 
         }
 
-        if (collision.tag == "Hero")
-        {
-            line[0].GetComponent<PlayerController>().Damaged(damage);
-        }
+        //if (collision.tag == "Hero")
+        //{
+        //    line[0].GetComponent<PlayerController>().Damaged(damage);
+        //}
     }
 
     internal IEnumerator ResetPosition()
