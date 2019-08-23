@@ -17420,7 +17420,7 @@ MonoBehaviour:
   previousPos: {x: 0, y: 0, z: 0}
   attackRange: 0
   detectRange: 0
-  tracking: 0
+  tracking: 1
   onPatrol: 0
   patrolPoints:
   - {fileID: 1184030460}
