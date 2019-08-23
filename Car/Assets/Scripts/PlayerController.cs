@@ -80,49 +80,6 @@ public class PlayerController : Character
             return;
         }
 
-        //if (Input.GetKeyDown(KeyCode.UpArrow) && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(Vector3.up * 1);
-        //    return;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.DownArrow) && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(Vector3.down * 1);
-        //    return;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.LeftArrow) && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(Vector3.left * 1);
-        //    return;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow) && beatManager.movable)
-        //{
-            
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(Vector3.right * 1);
-        //    return;
-        //}
-
-        //if (Input.touchCount == 1 && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(Vector3.up * 1);
-        //    return;
-        //}
-
-        // Mobile ------------------------------------------------------
-
         float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
         
@@ -145,35 +102,7 @@ public class PlayerController : Character
             return;
 
         }
-
-        // Mobile move Legacy------------------------------------
-
-        //if (dirx != 0 && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(new Vector3(dirx, 0f, 0f));
-        //    CrossPlatformInputManager.SetAxisZero("Horizontal");
-        //    return;
-        //}
-
-        //if (diry != 0 && beatManager.movable)
-        //{
-        //    previousPos = transform.position;
-        //    beatManager.isMovingCurrentBeat = true;
-        //    transform.Translate(new Vector3(0f, diry, 0f));
-        //    CrossPlatformInputManager.SetAxisZero("Vertical");
-        //    return;
-        //}
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.tag == "Hero")
-    //    {
-    //        Damaged(damage);
-    //    }
-    //}
 
     internal List<Transform> Damaged(int damage)
     {

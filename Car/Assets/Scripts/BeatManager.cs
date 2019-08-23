@@ -85,10 +85,6 @@ public class BeatManager : MonoBehaviour
 
         if(judgeTime >= 0 && judgeTime <= 20)
         {
-            //if (!isMovingCurrentBeat)
-            //{
-            //    Movement();
-            //}
             if (!movable)
             {
                 movable = true;
@@ -115,42 +111,4 @@ public class BeatManager : MonoBehaviour
         pointer.GetChild(1).localScale *= 1.5f; // CrossHair
         pointer.GetChild(1).DOScale(Vector3.one, (float)beatTerm - 0.1f);
     }
-
-    //private void Movement()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.UpArrow) && movable)
-    //    {
-    //        isMovingCurrentBeat = true;
-    //        pointer.Translate(Vector3.up * 2);
-    //        return;
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.DownArrow) && movable)
-    //    {
-    //        isMovingCurrentBeat = true;
-    //        pointer.Translate(Vector3.down * 2);
-    //        return;
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.LeftArrow) && movable)
-    //    {
-    //        isMovingCurrentBeat = true;
-    //        pointer.Translate(Vector3.left * 2);
-    //        return;
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.RightArrow) && movable)
-    //    {
-    //        isMovingCurrentBeat = true;
-    //        pointer.Translate(Vector3.right * 2);
-    //        return;
-    //    }
-
-    //    if (Input.touchCount == 1 && movable)
-    //    {
-    //        isMovingCurrentBeat = true;
-    //        pointer.Translate(Vector3.up * 2);
-    //        return;
-    //    }
-    //}
 }

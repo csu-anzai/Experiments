@@ -32,18 +32,6 @@ public class GameManager : MonoBehaviour
         if (collision.tag == "Player")
         {
             var line = collision.GetComponent<PlayerController>().line;
-            //foreach(var m in line)
-            //{
-            //    if (m.tag == "Player")
-            //    {
-            //        continue;
-            //    }
-            //    else
-            //    {
-            //        savedMonsters.Add(m);
-            //        m.gameObject.SetActive(false);
-            //    }
-            //}
 
             for (int i = line.Count-1; i > 0; i--)
             {
