@@ -10,6 +10,8 @@ public class EnemyController : Character
     public bool tracking = false;
     public bool onPatrol = false;
 
+    public LayerMask ignoreMask;
+
     protected Transform target;
     
 
@@ -19,7 +21,7 @@ public class EnemyController : Character
 
         foreach(var m in foundMonsters)
         {            
-            hit = Physics2D.Raycast(transform.position, (m.position - transform.position).normalized);
+            hit = Physics2D.Raycast(transform.position, (m.position - transform.position).normalized, Mathf.Infinity, ignoreMask);
             if (hit && hit.transform.gameObject.layer == LayerMask.NameToLayer("Monsters"))
             {
                 tracking = true;

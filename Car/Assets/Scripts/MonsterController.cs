@@ -72,11 +72,6 @@ public class MonsterController : Character
             isConneted = true;
 
         }
-
-        //if (collision.tag == "Hero")
-        //{
-        //    line[0].GetComponent<PlayerController>().Damaged(damage);
-        //}
     }
 
     internal IEnumerator ResetPosition()
@@ -90,30 +85,5 @@ public class MonsterController : Character
         untouchable = false;
         transform.position = originPos;
         ai.canMove = false;
-        
-        
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.transform.tag == "Player" && !isConneted)
-    //    {
-    //        line = collision.transform.GetComponent<PlayerController>().line;
-    //        me = line.Count;
-    //        front = me - 1;
-
-    //        if (front == 0)
-    //        {
-    //            playerCtrl = line[front].GetComponent<PlayerController>();
-    //        }
-    //        else
-    //        {
-    //            frontMonsterCtrl = line[front].GetComponent<MonsterController>();
-    //        }
-
-    //        line.Add(transform);
-    //        isConneted = true;
-
-    //    }
-    //}
 }
