@@ -12,10 +12,7 @@ public class PlayerController : Character
     public LayerMask mask;
 
     RaycastHit2D hit;
-<<<<<<< HEAD
-
-=======
->>>>>>> 91008539e029f2eb14267c4dd76ec404694b14c6
+    
     Vector2 dir;
     Vector2 mDir;
     float horizontal;
