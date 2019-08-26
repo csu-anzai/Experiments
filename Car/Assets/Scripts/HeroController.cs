@@ -129,21 +129,11 @@ public class HeroController : EnemyController
     }
 
     private void Tracking()
-    {
-        //LayerMask heroMask = LayerMask.NameToLayer("Test");
-        RaycastHit2D heroHit;
-        //RaycastHit2D[] hits;
-
-        //heroHit = Physics2D.Raycast(transform.position, ai.steeringTarget - transform.position, 2f, heroMask);
-        heroHit = Physics2D.CircleCast(ai.steeringTarget, 0.4f, Vector2.zero, 0f, heroMask);        
-
-        if (heroHit)
-            print("heroHIt");
-
+    {   
         Vector2 dir = ai.steeringTarget - transform.position;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
-        if (tracking && /*!heroHit*/ !preventer.waiting)
+        if (tracking && !preventer.waiting)
         {
             transform.position = (Vector2)ai.steeringTarget;
         }
@@ -151,18 +141,6 @@ public class HeroController : EnemyController
 
     private void Patrolling()
     {
-        //LayerMask heroMask = LayerMask.NameToLayer("Test");
-        RaycastHit2D heroHit;
-        //List<RaycastHit2D> hits;
-        //hits = new List<RaycastHit2D>();
-
-        //heroHit = Physics2D.Raycast(transform.position, ai.steeringTarget - transform.position, new ContactFilter2D().SetLayerMask(heroMask), hits);
-
-        heroHit = Physics2D.CircleCast(ai.steeringTarget, 0.4f, Vector2.zero, 0f, heroMask);
-
-        if (heroHit)
-            print("heroHIt");
-
         if (aiTarget.target.tag != "Waypoint")
         {
             dest = 0;
@@ -187,7 +165,7 @@ public class HeroController : EnemyController
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
 
-        if (/*!heroHit*/!preventer.waiting)
+        if (!preventer.waiting)
         {
             transform.position = (Vector2)ai.steeringTarget;
         }
