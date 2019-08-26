@@ -18,7 +18,8 @@ public class HeroController : EnemyController
     AIDestinationSetter aiTarget;
     AIPath ai;
     CinemachineImpulseSource impulseManager;
-    
+    PreventOverlap preventer;
+
     public RaycastHit2D hit;
     Vector2 enemyDir;
     Vector2 targetVector;
@@ -31,6 +32,7 @@ public class HeroController : EnemyController
         ai = GetComponent<AIPath>();
         aiTarget = GetComponent<AIDestinationSetter>();
         impulseManager = GetComponent<CinemachineImpulseSource>();
+        preventer = GetComponentInChildren<PreventOverlap>();
     }
 
     void Update()
@@ -118,7 +120,7 @@ public class HeroController : EnemyController
     //}
 
     private void AttackReady(Vector2 enemyDir)
-    {        
+    {
         Vector2 dir = enemyDir - (Vector2)transform.position;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
@@ -133,7 +135,7 @@ public class HeroController : EnemyController
         //RaycastHit2D[] hits;
 
         //heroHit = Physics2D.Raycast(transform.position, ai.steeringTarget - transform.position, 2f, heroMask);
-        heroHit = Physics2D.CircleCast(ai.steeringTarget, 0.4f, Vector2.zero, 0f, heroMask);
+        heroHit = Physics2D.CircleCast(ai.steeringTarget, 0.4f, Vector2.zero, 0f, heroMask);        
 
         if (heroHit)
             print("heroHIt");
@@ -141,7 +143,7 @@ public class HeroController : EnemyController
         Vector2 dir = ai.steeringTarget - transform.position;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
-        if (tracking && !heroHit)
+        if (tracking && /*!heroHit*/ !preventer.waiting)
         {
             transform.position = (Vector2)ai.steeringTarget;
         }
@@ -185,7 +187,7 @@ public class HeroController : EnemyController
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
 
-        if (!heroHit)
+        if (/*!heroHit*/!preventer.waiting)
         {
             transform.position = (Vector2)ai.steeringTarget;
         }
