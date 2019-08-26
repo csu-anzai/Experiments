@@ -11,10 +11,6 @@ public class PlayerController : Character
     public LayerMask mask;
 
     RaycastHit2D hit;
-    Ray2D upRay;
-    Ray2D downRay;
-    Ray2D leftRay;
-    Ray2D rightRay;
 
     Vector2 dir;
     Vector2 mDir;
