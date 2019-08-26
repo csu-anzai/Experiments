@@ -8,15 +8,20 @@ using Cinemachine;
 public class PlayerController : Character
 {
     public List<Transform> line;
+    public List<ParticleSystem> judgeFX;
     public LayerMask mask;
 
     RaycastHit2D hit;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 91008539e029f2eb14267c4dd76ec404694b14c6
     Vector2 dir;
     Vector2 mDir;
     float horizontal;
     float vertical;
     int damage;
+    int test = 0;
 
     private void Start()
     {
@@ -27,10 +32,22 @@ public class PlayerController : Character
 
     private void Update()
     {
+        //if (test == 2)
+        //{
+        //    judgeFX[1].Play();
+        //    test = 0;
+        //}
+        //else if (test < 0)
+        //{
+        //    judgeFX[1].Play();
+        //    test = 0;
+        //}
+
 
         if(queueSign != CheckQueueSign())
         {
             anim.SetTrigger("Dancing");
+            test++;
             queueSign++;
         }
 
@@ -67,14 +84,25 @@ public class PlayerController : Character
             if (hit)
             {
                 anim.SetTrigger("Fail");
+                if(!judgeFX[1].isPlaying)
+                    judgeFX[1].Play();
+                beatManager.isMovingCurrentBeat = true;
                 return;
             }
 
+            judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
             transform.Translate(dir);
             return;
         }
+        else if(!beatManager.movable && dir != Vector2.zero && dir.magnitude == 1)
+        {
+            if (!judgeFX[1].isPlaying)
+                judgeFX[1].Play();
+            beatManager.isMovingCurrentBeat = true;
+        }
+
 
         float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
@@ -88,8 +116,13 @@ public class PlayerController : Character
             if (hit)
             {
                 anim.SetTrigger("Fail");
+                if (!judgeFX[1].isPlaying)
+                    judgeFX[1].Play();
+                beatManager.isMovingCurrentBeat = true;
                 return;
             }
+
+            judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
             transform.Translate(mDir);
@@ -98,7 +131,16 @@ public class PlayerController : Character
             return;
 
         }
+        else if(!beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
+        {
+            if(!judgeFX[1].isPlaying)
+                judgeFX[1].Play();
+            beatManager.isMovingCurrentBeat = true;
+            CrossPlatformInputManager.SetAxisZero("Horizontal");
+            CrossPlatformInputManager.SetAxisZero("Vertical");
+        }
     }
+
 
     internal List<Transform> Damaged(int damage)
     {
