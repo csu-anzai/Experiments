@@ -29,19 +29,13 @@ public class PlayerController : Character
 
     private void Update()
     {
-        //if (test == 2)
-        //{
-        //    judgeFX[1].Play();
-        //    test = 0;
-        //}
-        //else if (test < 0)
-        //{
-        //    judgeFX[1].Play();
-        //    test = 0;
-        //}
+        if (test >= 2)
+        {
+            judgeFX[1].Play();
+            test = 0;
+        }
 
-
-        if(queueSign != CheckQueueSign())
+        if (queueSign != CheckQueueSign())
         {
             anim.SetTrigger("Dancing");
             test++;
@@ -87,6 +81,7 @@ public class PlayerController : Character
                 return;
             }
 
+            test = 0;
             judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
@@ -119,6 +114,7 @@ public class PlayerController : Character
                 return;
             }
 
+            test = 0;
             judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
