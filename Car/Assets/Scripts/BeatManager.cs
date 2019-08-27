@@ -17,6 +17,7 @@ public class BeatManager : MonoBehaviour
     public int queueSign;
     public bool isMovingCurrentBeat = false;
     public Queue<Vector3> fool;
+    public bool timeOver;
 
     double beatTerm;
     double lastBeat;
@@ -30,7 +31,7 @@ public class BeatManager : MonoBehaviour
     Vector3Int currentCell;
     PlayerController playerManager;
     AudioSource mySong;
-
+    
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -94,6 +95,15 @@ public class BeatManager : MonoBehaviour
         else
         {
             movable = false;
+        }
+
+        if (judgeTime > 20)
+        {
+            timeOver = true;
+        }
+        else
+        {
+            timeOver = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

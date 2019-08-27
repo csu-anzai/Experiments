@@ -21,4 +21,9 @@ public class Character : MonoBehaviour
     {
         return beatManager.queueSign;
     }
+
+    protected bool CheckTimeOver()
+    {
+        return beatManager.timeOver;
+    }
 }

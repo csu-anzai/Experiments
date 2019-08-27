@@ -160,9 +160,6 @@ public class HeroController : EnemyController
 
         heroHit = Physics2D.CircleCast(ai.steeringTarget, 0.4f, Vector2.zero, 0f, heroMask);
 
-        if (heroHit)
-            print("heroHIt");
-
         if (aiTarget.target.tag != "Waypoint")
         {
             dest = 0;
