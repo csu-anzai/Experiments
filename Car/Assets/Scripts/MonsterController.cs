@@ -67,6 +67,7 @@ public class MonsterController : Character
                 frontMonsterCtrl = line[front].GetComponent<MonsterController>();
             }
 
+            playerCtrl = collision.GetComponent<PlayerController>();
             playerCtrl.stompFX.Add(stompFX);
             line.Add(transform);
             parentPlayer = collision.transform;
