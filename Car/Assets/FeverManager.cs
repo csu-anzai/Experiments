@@ -6,10 +6,12 @@ using UnityEngine;
 public class FeverManager : MonoBehaviour
 {
     public bool isAvailable;
+    public ComboUI comboUI;
+    public Animator feverButton;
 
     PlayerController pc;
 
-    int comboCount = 0;
+    public int comboCount = 0;
     public int feverGaugeCount = 0;
     const int maxFeverGaugeCount = 100;
 
@@ -27,7 +29,7 @@ public class FeverManager : MonoBehaviour
             feverGaugeCount = feverGaugeCount < 0 ? 0 : feverGaugeCount;
         }
         comboCount = 0;
-        PrintCount();
+        comboUI.OnComboBreakAnim();
     }
 
     internal void IncreseCombo()
@@ -38,16 +40,16 @@ public class FeverManager : MonoBehaviour
             if (feverGaugeCount >= 100)
             {
                 isAvailable = true;
+                feverButton.SetBool("OnFever", true);
                 feverGaugeCount = 0;
+            }
+            else
+            {
+                feverButton.SetBool("OnFever", false);
             }
         }
         comboCount++;
-        PrintCount();
-    }
-
-    internal void PrintCount()
-    {
-        print(comboCount + ", " + feverGaugeCount);
+        comboUI.OnIncreaseAnim();
     }
 
     internal void ResetFeverGauge()

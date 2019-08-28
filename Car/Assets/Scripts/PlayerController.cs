@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using Cinemachine;
+using DG.Tweening;
 
 public class PlayerController : Character
 {
     public List<Transform> line;
     public List<ParticleSystem> judgeFX;
+    public List<ParticleSystem> stompFX;
     public LayerMask mask;
 
     AudioSource clapSFX;
@@ -18,7 +20,7 @@ public class PlayerController : Character
     Vector2 mDir;
     float horizontal;
     float vertical;
-    int damage;
+    int damage;    
 
     private void Start()
     {
@@ -85,6 +87,14 @@ public class PlayerController : Character
                 return;
             }
 
+            if (fm.comboCount >= 10)
+            {
+                foreach (var fx in stompFX)
+                {
+                    fx.Play();
+                }
+            }
+
             fm.IncreseCombo();
             clapSFX.Play();
             judgeFX[0].Play();
@@ -118,6 +128,14 @@ public class PlayerController : Character
                     judgeFX[1].Play();
                 beatManager.isMovingCurrentBeat = true;
                 return;
+            }
+
+            if (fm.comboCount >= 10)
+            {
+                foreach (var fx in stompFX)
+                {
+                    fx.Play();
+                }
             }
 
             fm.IncreseCombo();
@@ -158,7 +176,7 @@ public class PlayerController : Character
         {
             m.GetComponent<Character>().previousPos = transform.position;
             //m.position = transform.position;
-            m.position = Vector3.Lerp(m.position, transform.position, 0.9f);
+            m.DOMove(transform.position, 0.2f);
         }
     }
 
