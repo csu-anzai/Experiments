@@ -8,6 +8,7 @@ public class MonsterController : Character
 {
     public int damage;
     public Vector2 originPos;
+    public ParticleSystem stompFX;
 
     int front;
     int me;
@@ -66,6 +67,8 @@ public class MonsterController : Character
                 frontMonsterCtrl = line[front].GetComponent<MonsterController>();
             }
 
+            playerCtrl = collision.GetComponent<PlayerController>();
+            playerCtrl.stompFX.Add(stompFX);
             line.Add(transform);
             parentPlayer = collision.transform;
             gameObject.layer = LayerMask.NameToLayer("Monsters");
@@ -80,6 +83,7 @@ public class MonsterController : Character
         untouchable = true;
         isConneted = false;
         line.Remove(transform);
+        playerCtrl.stompFX.Remove(stompFX);
         ai.canMove = true;
         yield return new WaitForSeconds(3f);
         untouchable = false;

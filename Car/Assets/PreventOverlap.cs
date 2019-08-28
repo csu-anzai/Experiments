@@ -21,13 +21,11 @@ public class PreventOverlap : MonoBehaviour
         {
             waiting = true;
             infrontHero= true;
-            print("preventing");
         }
         else if(collision.gameObject.layer == LayerMask.NameToLayer("Preventer"))   // Tag로 해도 될듯함
         {
             if (collision.GetComponent<PreventOverlap>().priorityOrder > priorityOrder)
                 waiting = true;
-            print("preventing");
         }
     }
 

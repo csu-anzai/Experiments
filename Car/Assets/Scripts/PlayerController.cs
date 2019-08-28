@@ -4,23 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using Cinemachine;
+using DG.Tweening;
 
 public class PlayerController : Character
 {
     public List<Transform> line;
     public List<ParticleSystem> judgeFX;
+    public List<ParticleSystem> stompFX;
     public LayerMask mask;
 
+    AudioSource clapSFX;
+    FeverManager fm;
     RaycastHit2D hit;
     
     Vector2 dir;
     Vector2 mDir;
     float horizontal;
     float vertical;
-    int damage;
+    int damage;    
 
     private void Start()
     {
+        fm = GetComponent<FeverManager>();
+        clapSFX = GetComponent<AudioSource>();
         parentPlayer = transform;
         line = new List<Transform>();
         line.Add(transform);
@@ -28,7 +34,15 @@ public class PlayerController : Character
 
     private void Update()
     {
-        if (queueSign != CheckQueueSign())
+        if (CheckTimeOver() && !beatManager.isMovingCurrentBeat)
+        {
+            fm.ResetCombo();
+            if (!judgeFX[1].isPlaying)
+                judgeFX[1].Play();
+            beatManager.isMovingCurrentBeat = true;
+        }
+
+        if(queueSign != CheckQueueSign())
         {
             anim.SetTrigger("Dancing");
             queueSign++;
@@ -67,12 +81,23 @@ public class PlayerController : Character
             if (hit)
             {
                 anim.SetTrigger("Fail");
+                fm.ResetCombo();
                 if(!judgeFX[1].isPlaying)
                     judgeFX[1].Play();
                 beatManager.isMovingCurrentBeat = true;
                 return;
             }
 
+            if (fm.comboCount >= 10)
+            {
+                foreach (var fx in stompFX)
+                {
+                    fx.Play();
+                }
+            }
+
+            fm.IncreseCombo();
+            clapSFX.Play();
             judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
@@ -89,22 +114,33 @@ public class PlayerController : Character
 
         float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
+        float feverSkill = CrossPlatformInputManager.GetAxisRaw("Fire1");
         
         mDir = new Vector2(dirx, diry);        
 
         if (beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
         {
-            print("pass");
             hit = Physics2D.Raycast(transform.position, mDir, 1f, mask);
             if (hit)
             {
                 anim.SetTrigger("Fail");
+                fm.ResetCombo();
                 if (!judgeFX[1].isPlaying)
                     judgeFX[1].Play();
                 beatManager.isMovingCurrentBeat = true;
                 return;
             }
 
+            if (fm.comboCount >= 10)
+            {
+                foreach (var fx in stompFX)
+                {
+                    fx.Play();
+                }
+            }
+
+            fm.IncreseCombo();
+            clapSFX.Play();
             judgeFX[0].Play();
             previousPos = transform.position;
             beatManager.isMovingCurrentBeat = true;
@@ -112,7 +148,6 @@ public class PlayerController : Character
             CrossPlatformInputManager.SetAxisZero("Horizontal");
             CrossPlatformInputManager.SetAxisZero("Vertical");
             return;
-
         }
         else if(!beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
         {
@@ -122,13 +157,35 @@ public class PlayerController : Character
             CrossPlatformInputManager.SetAxisZero("Horizontal");
             CrossPlatformInputManager.SetAxisZero("Vertical");
         }
+
+        if (beatManager.movable && feverSkill == 1 && fm.isAvailable)
+        {
+            clapSFX.Play();
+            judgeFX[0].Play();
+            fm.ResetFeverGauge();
+            fm.isAvailable = false;
+            beatManager.isMovingCurrentBeat = true;
+            CrossPlatformInputManager.SetAxisZero("Fire1");
+            print("Fire");
+            ActiveSkill();
+        }
     }
 
+    private void ActiveSkill()
+    {
+        foreach(var m in line)
+        {
+            m.GetComponent<Character>().previousPos = transform.position;
+            //m.position = transform.position;
+            m.DOMove(transform.position, 0.2f);
+        }
+    }
 
     internal List<Transform> Damaged(int damage)
     {
         List<Transform> mobs = new List<Transform>();
-        
+        fm.ResetCombo();
+
         if (damage != 0 && line.Count - damage <= 0)
         {
             print("Game Over");
