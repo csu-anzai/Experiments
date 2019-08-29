@@ -12,20 +12,25 @@ public class PlayerController : Character
     public List<ParticleSystem> judgeFX;
     public List<ParticleSystem> stompFX;
     public LayerMask mask;
+    public InventoryManager inven;
+    public GameManager gm;
+    public bool keyboardMode;
 
     AudioSource clapSFX;
     FeverManager fm;
     RaycastHit2D hit;
     Vector2 dir;
     Vector2 mDir;
+    float dirx = 0;
+    float diry = 0;
     float horizontal;
     float vertical;
-    int damage;    
-
+    int damage;
+    
     private void Start()
     {
-        fm = GetComponent<FeverManager>();
         clapSFX = GetComponent<AudioSource>();
+        fm = GetComponent<FeverManager>();
         parentPlayer = transform;
         line = new List<Transform>();
         line.Add(transform);
@@ -33,6 +38,8 @@ public class PlayerController : Character
 
     private void Update()
     {
+        inven.ItemFollowing(transform.GetChild(1));
+
         if (CheckTimeOver() && !beatManager.isMovingCurrentBeat)
         {
             fm.ResetCombo();
@@ -51,68 +58,21 @@ public class PlayerController : Character
         {
             Movement();
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Damaged(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Damaged(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Damaged(3);
-        }
     }
 
     public void Movement()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-        dir = new Vector2(horizontal, vertical);
-
-        if (beatManager.movable && dir != Vector2.zero && dir.magnitude == 1)
+        if (keyboardMode)
         {
-            hit = Physics2D.Raycast(transform.position, dir, 1f, mask);
-            if (hit)
-            {
-                anim.SetTrigger("Fail");
-                fm.ResetCombo();
-                if(!judgeFX[1].isPlaying)
-                    judgeFX[1].Play();
-                beatManager.isMovingCurrentBeat = true;
-                return;
-            }
-
-            if (fm.comboCount >= 10)
-            {
-                foreach (var fx in stompFX)
-                {
-                    fx.Play();
-                }
-            }
-
-            fm.IncreseCombo();
-            clapSFX.Play();
-            judgeFX[0].Play();
-            previousPos = transform.position;
-            beatManager.isMovingCurrentBeat = true;
-            transform.Translate(dir);
-            return;
+            dirx = Input.GetAxisRaw("Horizontal");
+            diry = Input.GetAxisRaw("Vertical");
         }
-        else if(!beatManager.movable && dir != Vector2.zero && dir.magnitude == 1)
+        else
         {
-            if (!judgeFX[1].isPlaying)
-                judgeFX[1].Play();
-            beatManager.isMovingCurrentBeat = true;
+            dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+            diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
         }
 
-
-        float dirx = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-        float diry = CrossPlatformInputManager.GetAxisRaw("Vertical");
         float feverSkill = CrossPlatformInputManager.GetAxisRaw("Fire1");
         
         mDir = new Vector2(dirx, diry);        
@@ -120,7 +80,15 @@ public class PlayerController : Character
         if (beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
         {
             hit = Physics2D.Raycast(transform.position, mDir, 1f, mask);
-            if (hit)
+            if (hit && hit.transform.tag == "Interactable")
+            {
+                print(hit.transform.tag);
+                hit.transform.GetComponent<Interactable>().Interact();
+                anim.SetTrigger("Fail");
+                beatManager.isMovingCurrentBeat = true;
+                return;
+            }
+            else if (hit)
             {
                 anim.SetTrigger("Fail");
                 fm.ResetCombo();
@@ -163,6 +131,7 @@ public class PlayerController : Character
             judgeFX[0].Play();
             fm.ResetFeverGauge();
             fm.isAvailable = false;
+            fm.feverButton.OnFever(false);
             beatManager.isMovingCurrentBeat = true;
             CrossPlatformInputManager.SetAxisZero("Fire1");
             print("Fire");
@@ -188,6 +157,7 @@ public class PlayerController : Character
         if (damage != 0 && line.Count - damage <= 0)
         {
             print("Game Over");
+            gm.nextStatus = GameManager.state.Lose;
             beatManager.gameObject.SetActive(false);
             return mobs;
         }
@@ -198,5 +168,13 @@ public class PlayerController : Character
             StartCoroutine(line[line.Count - 1].GetComponent<MonsterController>().ResetPosition());
         }
         return mobs;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Item"))
+        {
+            inven.AddItem(collision.transform);
+        }
     }
 }

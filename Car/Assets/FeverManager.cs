@@ -7,7 +7,7 @@ public class FeverManager : MonoBehaviour
 {
     public bool isAvailable;
     public ComboUI comboUI;
-    public Animator feverButton;
+    public FeverButton feverButton;
 
     PlayerController pc;
 
@@ -40,12 +40,8 @@ public class FeverManager : MonoBehaviour
             if (feverGaugeCount >= 100)
             {
                 isAvailable = true;
-                feverButton.SetBool("OnFever", true);
+                feverButton.OnFever(true);
                 feverGaugeCount = 0;
-            }
-            else
-            {
-                feverButton.SetBool("OnFever", false);
             }
         }
         comboCount++;
