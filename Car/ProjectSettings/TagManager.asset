@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Waypoint
+  - Interactable
+  - Key
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Hero
   - Test
   - Preventer
-  - 
+  - Item
   - 
   - 
   - 

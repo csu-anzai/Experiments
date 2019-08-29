@@ -18,6 +18,7 @@ public class BeatManager : MonoBehaviour
     public bool isMovingCurrentBeat = false;
     public Queue<Vector3> fool;
     public bool timeOver;
+    public GameManager gm;
 
     double beatTerm;
     double lastBeat;
@@ -31,7 +32,9 @@ public class BeatManager : MonoBehaviour
     Vector3Int currentCell;
     PlayerController playerManager;
     AudioSource mySong;
-    
+
+    public double remain;
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -56,8 +59,11 @@ public class BeatManager : MonoBehaviour
 
     void Update()
     {
+        remain = term - songTime;
+
         if ((Input.GetKeyDown(KeyCode.Space) || Input.touchCount >= 1) && !bgmOn)
         {
+            gm.nextStatus = GameManager.state.Playing;
             mySong.Play();
             bgmOn = true;
         }
@@ -75,16 +81,13 @@ public class BeatManager : MonoBehaviour
         {
             clap.Play();
             queueSign++;
-
-            StartCoroutine(ResetFX());
-
             term += beatTerm;
             lastBeat = songTime;            
         }
 
         judgeTime = (songTime - lastBeat) * 100;
 
-        if(judgeTime >= 0 && judgeTime <= 20)
+        if(judgeTime >= 0 && judgeTime <= 20 && bgmOn)
         {
             if (!movable)
             {
@@ -110,15 +113,5 @@ public class BeatManager : MonoBehaviour
         {
             print("judgeTime: " + judgeTime);
         }
-    }
-
-    IEnumerator ResetFX()
-    {
-        yield return null;
-
-        pointer.GetChild(0).localScale *= 40f; // BeatFX
-        pointer.GetChild(0).DOScale(Vector3.one, (float)beatTerm - 0.1f);
-        pointer.GetChild(1).localScale *= 1.5f; // CrossHair
-        pointer.GetChild(1).DOScale(Vector3.one, (float)beatTerm - 0.1f);
     }
 }
