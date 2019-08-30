@@ -19,6 +19,7 @@ public class PlayerController : Character
     AudioSource clapSFX;
     FeverManager fm;
     RaycastHit2D hit;
+    
     Vector2 dir;
     Vector2 mDir;
     float dirx = 0;
@@ -142,10 +143,10 @@ public class PlayerController : Character
     private void ActiveSkill()
     {
         foreach(var m in line)
-        {
-            m.GetComponent<Character>().previousPos = transform.position;
-            //m.position = transform.position;
+        {            
+            // m.position = transform.position;
             m.DOMove(transform.position, 0.2f);
+            m.GetComponent<Character>().previousPos = transform.position;
         }
     }
 

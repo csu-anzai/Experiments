@@ -84,10 +84,12 @@ public class MonsterController : Character
         isConneted = false;
         line.Remove(transform);
         playerCtrl.stompFX.Remove(stompFX);
-        ai.canMove = true;
+        ai.canSearch = true;
+        ai.canMove = true;        
         yield return new WaitForSeconds(3f);
         untouchable = false;
         transform.position = originPos;
+        ai.canSearch = false;
         ai.canMove = false;
     }
 }
