@@ -298,11 +298,7 @@ Transform:
   - {fileID: 162483259}
   - {fileID: 1894538286}
   m_Father: {fileID: 0}
-<<<<<<< HEAD
-  m_RootOrder: 8
-=======
   m_RootOrder: 11
->>>>>>> ae33c24a8e6a2e81df31e056ea72489599bb83ad
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &30870200
 MonoBehaviour:
