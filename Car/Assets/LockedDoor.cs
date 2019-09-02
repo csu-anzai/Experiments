@@ -6,15 +6,7 @@ public class LockedDoor : Interactable
 {
     public InventoryManager inven;
     public bool onLock = true;
-
-    SpriteRenderer sp;
-    BoxCollider2D col;
-
-    private void Awake()
-    {
-        sp = GetComponent<SpriteRenderer>();
-        col = GetComponent<BoxCollider2D>();
-    }
+    public List<Transform> jails;
 
     public override void Interact()
     {
@@ -35,7 +27,10 @@ public class LockedDoor : Interactable
 
     void OnOff(bool status)
     {
-        sp.enabled = status;
-        col.enabled = status;
+        foreach (var jail in jails)
+        {
+            jail.GetComponent<SpriteRenderer>().enabled = status;
+            jail.GetComponent<BoxCollider2D>().enabled = status;
+        }
     }
 }
