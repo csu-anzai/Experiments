@@ -327,7 +327,7 @@ MonoBehaviour:
     m_Bits: 256
   inven: {fileID: 1971103056}
   gm: {fileID: 1618905402}
-  keyboardMode: 0
+  keyboardMode: 1
 --- !u!61 &30870201
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16405,7 +16405,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -17688,6 +17688,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 874e865a0cd44b04a857c27382139cda, type: 3}
+--- !u!1 &999586297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8910487904390174335, guid: 0ab819597c5adca4e8086d19015811a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1937620329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &999586298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999586297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563a83aded1e12a4eab0603b7abf986a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 20.67
+  viewAngle: 0
+  targetMask:
+    m_Bits: 512
+  obstacleMask:
+    m_Bits: 256
+  visibleTargets: []
 --- !u!1001 &999699160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23590,7 +23615,7 @@ PrefabInstance:
     - target: {fileID: 8910487904390174335, guid: 0ab819597c5adca4e8086d19015811a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8910487905702120916, guid: 0ab819597c5adca4e8086d19015811a2,
         type: 3}
@@ -24132,7 +24157,7 @@ MonoBehaviour:
   m_Follow: {fileID: 30870199}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 6
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -24397,7 +24422,7 @@ PrefabInstance:
     - target: {fileID: 8910487904390174335, guid: 0ab819597c5adca4e8086d19015811a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8910487905702120916, guid: 0ab819597c5adca4e8086d19015811a2,
         type: 3}

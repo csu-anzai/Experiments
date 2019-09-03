@@ -142,6 +142,8 @@ public class PlayerController : Character
 
     private void ActiveSkill()
     {
+        previousPos = transform.position;
+
         foreach(var m in line)
         {            
             // m.position = transform.position;

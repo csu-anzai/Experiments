@@ -42,7 +42,7 @@ public class MonsterController : Character
         }
         else if(line != null && front != -1 && isConneted && !untouchable)
         {
-            if(frontMonsterCtrl.previousPos != line[front].position)
+            if (frontMonsterCtrl.previousPos != line[front].position)
             {
                 previousPos = transform.position;
                 transform.position = frontMonsterCtrl.previousPos;
