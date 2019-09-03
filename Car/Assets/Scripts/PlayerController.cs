@@ -55,10 +55,11 @@ public class PlayerController : Character
             queueSign++;
         }
 
-        if(!beatManager.isMovingCurrentBeat)
-        {
-            Movement();
-        }
+        //if(!beatManager.isMovingCurrentBeat)
+        //{
+            
+        //}
+        Movement();
     }
 
     public void Movement()
@@ -78,7 +79,7 @@ public class PlayerController : Character
         
         mDir = new Vector2(dirx, diry);        
 
-        if (beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
+        if (beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1 && !beatManager.isMovingCurrentBeat)
         {
             hit = Physics2D.Raycast(transform.position, mDir, 1f, mask);
             if (hit && hit.transform.tag == "Interactable")
@@ -117,16 +118,23 @@ public class PlayerController : Character
             CrossPlatformInputManager.SetAxisZero("Vertical");
             return;
         }
-        else if(!beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
-        {
-            if(!judgeFX[1].isPlaying)
-                judgeFX[1].Play();
+
+        else if (!beatManager.movable && mDir != Vector2.zero && mDir.magnitude == 1)
+        {            
+            anim.SetTrigger("Fail");
+            fm.ResetCombo();
+            //if (!judgeFX[1].isPlaying)
+            judgeFX[1].Play();
+            if (beatManager.judge2 > 10)
+            {
+                beatManager.preMiss = true;
+            }
             beatManager.isMovingCurrentBeat = true;
             CrossPlatformInputManager.SetAxisZero("Horizontal");
             CrossPlatformInputManager.SetAxisZero("Vertical");
         }
 
-        if (beatManager.movable && feverSkill == 1 && fm.isAvailable)
+        if (beatManager.movable && feverSkill == 1 && fm.isAvailable && !beatManager.isMovingCurrentBeat)
         {
             clapSFX.Play();
             judgeFX[0].Play();
@@ -143,7 +151,6 @@ public class PlayerController : Character
     private void ActiveSkill()
     {
         previousPos = transform.position;
-
         foreach(var m in line)
         {            
             // m.position = transform.position;

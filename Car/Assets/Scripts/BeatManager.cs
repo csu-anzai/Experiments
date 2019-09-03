@@ -16,6 +16,7 @@ public class BeatManager : MonoBehaviour
     public bool movable = false;
     public int queueSign;
     public bool isMovingCurrentBeat = false;
+    public bool preMiss = false;
     public Queue<Vector3> fool;
     public bool timeOver;
     public GameManager gm;
@@ -27,6 +28,7 @@ public class BeatManager : MonoBehaviour
     double lastReportedPlayheadPosition;
     double songTime;
     double term;
+    double copyTerm;
     bool bgmOn = false;
     
     Vector3Int currentCell;
@@ -34,6 +36,7 @@ public class BeatManager : MonoBehaviour
     AudioSource mySong;
 
     public double remain;
+    public double judge2;
 
     private void Awake()
     {
@@ -49,6 +52,7 @@ public class BeatManager : MonoBehaviour
         previousFrameTime = GetTimer();
         lastReportedPlayheadPosition = 0;
         term = mySong.time + beatTerm + timeOffset;
+        copyTerm = term;
         queueSign = 0;
     }
 
@@ -79,29 +83,47 @@ public class BeatManager : MonoBehaviour
 
         if (songTime >= term && bgmOn)
         {
+            print("judgeTime: " + judge2);
             clap.Play();
             queueSign++;
             term += beatTerm;
-            lastBeat = songTime;            
+            lastBeat = songTime; 
         }
 
         judgeTime = (songTime - lastBeat) * 100;
+        //print((copyTerm - songTime) * 100);
+        judge2 = (copyTerm - songTime) * 100;
 
-        if(judgeTime >= 0 && judgeTime <= 20 && bgmOn)
+        if (judge2 <= 15 && judge2 >= -15 && bgmOn)
         {
-            if (!movable)
+            if (!movable && !preMiss)
             {
                 movable = true;
                 isMovingCurrentBeat = false;
             }
         }
-        else
+        else if (bgmOn)
         {
             movable = false;
         }
 
-        if (judgeTime > 20)
+        //if (judgeTime >= 0 && judgeTime <= 20 && bgmOn)
+        //{
+        //    if (!movable)
+        //    {
+        //        movable = true;
+        //        isMovingCurrentBeat = false;
+        //    }
+        //}
+        //else if (bgmOn)
+        //{
+        //    movable = false;
+        //}
+
+        if (judge2 < -30)
         {
+            copyTerm = term;
+            preMiss = false;
             timeOver = true;
         }
         else
@@ -109,9 +131,19 @@ public class BeatManager : MonoBehaviour
             timeOver = false;
         }
 
+        //if (judgeTime > 40)
+        //{
+        //    copyTerm = term;
+        //    timeOver = true;
+        //}
+        //else
+        //{
+        //    timeOver = false;
+        //}
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            print("judgeTime: " + judgeTime);
+            print("judgeTime: " + judge2);
         }
     }
 }
