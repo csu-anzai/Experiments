@@ -14,13 +14,13 @@ public class HeroController : EnemyController
     public List<GameObject> emoteList;
     public ParticleSystem hitFX;
     public LayerMask heroMask;
+    public RaycastHit2D hit;
 
     AIDestinationSetter aiTarget;
     AIPath ai;
     CinemachineImpulseSource impulseManager;
     PreventOverlap preventer;
-
-    public RaycastHit2D hit;
+    
     Vector2 enemyDir;
     Vector2 targetVector;
     int moveCount = 0;
@@ -82,33 +82,43 @@ public class HeroController : EnemyController
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Monsters"))
+    //    {
+    //        foundMonsters.Remove(collision.transform);
+    //    }
+    //}
+
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{        
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Monsters"))
+    //    {            
+    //        if(!foundMonsters.Contains(collision.transform))
+    //        {
+    //            foundMonsters.Add(collision.transform);
+    //        }
+
+    //        if (target != null)
+    //        {
+    //            GetComponent<AIDestinationSetter>().target = target;
+    //            targetVector = target.position;
+
+    //            tracking = true;
+    //            anim.SetBool("OnTracking", true);
+    //            onPatrol = false;
+    //        }
+    //    }
+    //}
+
+    public void SetTracking()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Monsters"))
-        {
-            foundMonsters.Remove(collision.transform);
-        }
-    }
+        GetComponent<AIDestinationSetter>().target = target;
+        targetVector = target.position;
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {        
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Monsters"))
-        {            
-            if(!foundMonsters.Contains(collision.transform))
-            {
-                foundMonsters.Add(collision.transform);
-            }
-
-            if (target != null)
-            {
-                GetComponent<AIDestinationSetter>().target = target;
-                targetVector = target.position;
-
-                tracking = true;
-                anim.SetBool("OnTracking", true);
-                onPatrol = false;
-            }
-        }
+        tracking = true;
+        anim.SetBool("OnTracking", true);
+        onPatrol = false;
     }
 
     //private void OnDrawGizmos()
@@ -131,6 +141,7 @@ public class HeroController : EnemyController
     private void Tracking()
     {   
         Vector2 dir = ai.steeringTarget - transform.position;
+        lastForwardDir = dir;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
         if (tracking && !preventer.waiting)
@@ -162,6 +173,7 @@ public class HeroController : EnemyController
         }
 
         Vector2 dir = ai.steeringTarget - transform.position;
+        lastForwardDir = dir;
         anim.SetFloat("X", dir.x);
         anim.SetFloat("Y", dir.y);
 

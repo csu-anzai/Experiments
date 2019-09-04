@@ -83,7 +83,7 @@ public class BeatManager : MonoBehaviour
 
         if (songTime >= term && bgmOn)
         {
-            print("judgeTime: " + judge2);
+            //print("judgeTime: " + judge2);
             clap.Play();
             queueSign++;
             term += beatTerm;

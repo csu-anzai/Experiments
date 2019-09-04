@@ -12,7 +12,8 @@ public class EnemyController : Character
 
     public LayerMask ignoreMask;
 
-    protected Transform target;
+    public Transform target;
+    public Vector3 lastForwardDir;
     
 
     protected void Finding(List<Transform> foundMonsters)
